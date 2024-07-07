@@ -19,7 +19,7 @@ export interface EpicDeps {
 
 export type ExampleEpic = (action$: Observable<Action>, store$: StateObservable<ApplicationState>, deps: EpicDeps) => Observable<Action>;
 
-const DEFAULT_STATE: ApplicationState = { details: {}, cart: {} };
+export const DEFAULT_STATE: ApplicationState = { details: {}, cart: {} };
 
 // actions
 export const productsLoad = () => ({ type: 'PRODUCTS_LOAD' } as const);
@@ -43,7 +43,7 @@ export type Action =
 
 // reducer
 
-function createRootReducer(state: Partial<ApplicationState>) {
+export function createRootReducer(state: Partial<ApplicationState>) {
     const defaultState = { ...DEFAULT_STATE, ...state };
 
     const fn = (state: ApplicationState = defaultState, action: Action): ApplicationState => produce(state, draft => {

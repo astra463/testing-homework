@@ -37,3 +37,5 @@ export class CartApi {
         localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(cart));
     }
 }
+
+export { ProductShortInfo };
