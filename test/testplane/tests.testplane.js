@@ -473,6 +473,35 @@ describe("Страницы", () => {
 		await productPage.waitForDisplayed();
 		await productPage.assertView("plain");
 	});
+
+	it("Страница успешного заказа отображается корректно", async ({
+		browser,
+	}) => {
+		await browser.url(secondProductUrl);
+
+		// Находим и кликаем по кнопке "Add to Cart"
+		const addToCartButton = await browser.$(".ProductDetails-AddToCart");
+		await addToCartButton.click();
+
+		await browser.url(cartUrl);
+
+		// Заполнение формы
+		const nameField = await browser.$("#f-name");
+		const phoneField = await browser.$("#f-phone");
+		const addressField = await browser.$("#f-address");
+		const checkoutButton = await browser.$(".Form-Submit");
+
+		await nameField.setValue("Тестовое Имя");
+		await phoneField.setValue("1234567890");
+		await addressField.setValue("Тестовый Адрес, 123");
+
+		// Оформление заказа
+		await checkoutButton.click();
+		
+		const cartMessage = await browser.$(".Cart-SuccessMessage");
+		await cartMessage.waitForDisplayed();
+		await cartMessage.assertView("plain");
+	});
 });
 
 describe("Проверка ссылок в шапке магазина", () => {
